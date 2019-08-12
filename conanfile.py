@@ -122,7 +122,6 @@ class QtConan(ConanFile):
     }, **{module: False for module in _submodules if module != 'qtbase'}
     )
     default_options["qtwebengine"] = True
-    options["shared"] = True
     requires = "zlib/1.2.11@conan/stable"
     short_paths = True
 
