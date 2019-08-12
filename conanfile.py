@@ -551,6 +551,10 @@ class QtConan(ConanFile):
                 try:
                     print("Run configure")
                     self.run("%s/qt5/configure %s" % (self.source_folder, " ".join(args)))
+                except Exception as e:
+                    print("Unexpected exception")
+                    print(e.message)
+                    print(e.__doc__)
                 finally:
                     print("Patch log")
                     self.output.info(open('config.log', errors='backslashreplace').read())
