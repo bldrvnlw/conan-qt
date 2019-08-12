@@ -554,7 +554,8 @@ class QtConan(ConanFile):
                 finally:
                     print("Patch log")
                     self.output.info(open('config.log', errors='backslashreplace').read())
-
+                
+                print("Patch done - compiler settings")
                 if self.settings.compiler == "Visual Studio":
                     print("VS using jom")
                     make = "jom"
