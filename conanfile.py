@@ -557,7 +557,8 @@ class QtConan(ConanFile):
                     print(e.__doc__)
                 finally:
                     print("Patch log")
-                    self.output.info(open('config.log', errors='backslashreplace').read())
+                    # python 3 , errors='backslashreplace'
+                    self.output.info(open('config.log').read())
                 
                 print("Patch done - compiler settings")
                 if self.settings.compiler == "Visual Studio":
