@@ -562,7 +562,7 @@ class QtConan(ConanFile):
                     make = "mingw32-make"
                 else:
                     make = "make"
-                print("Run make with {0}".format(make)    
+                print("Run make with {0}".format(make))  
                 self.run(make, run_environment=True)
                 Print("Run install")
                 self.run("%s install" % make)
