@@ -3,13 +3,27 @@ build: false
 environment:
     PYTHON_HOME: "C:\\Python27"
 
+    CONAN_REFERENCE: "qt/5.12.4"
+    CONAN_USERNAME: "bvanlew"
+    CONAN_LOGIN_USERNAME: "admin"
+    CONAN_PASSWORD:
+        secure: g+1lNdgrCLmyKNf3KvbHSln5A1H7BsVhsMsIbwgo+UU=
+    CONAN_CHANNEL: "stable"
+    VS150COMNTOOLS: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\Tools\\"
+    CONAN_UPLOAD: http://cytosplore.lumc.nl:8081/artifactory/api/conan/conan-local
+    CONAN_REMOTE: lkebconan
+
+    
 #    CONAN_TOTAL_PAGES: 6
 
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
           CONAN_VISUAL_VERSIONS: 15
+          CONAN_ARCHS: x86_64
           CONAN_BUILD_TYPES: Release
           CONAN_CURRENT_PAGE: 1
+          CONAN_VISUAL_RUNTIMES: MD
+          BUILD_SHARED: True          
         # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
           # CONAN_VISUAL_VERSIONS: 15
           # CONAN_BUILD_TYPES: Release
