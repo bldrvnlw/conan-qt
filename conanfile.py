@@ -549,17 +549,22 @@ class QtConan(ConanFile):
         with tools.vcvars(self.settings) if self.settings.compiler == "Visual Studio" else tools.no_op():
             with tools.environment_append({"MAKEFLAGS": "j%d" % tools.cpu_count(), "PKG_CONFIG_PATH": os.getcwd()}):
                 try:
+                    print("Run configure")
                     self.run("%s/qt5/configure %s" % (self.source_folder, " ".join(args)))
                 finally:
+                    print("Patch log")
                     self.output.info(open('config.log', errors='backslashreplace').read())
 
                 if self.settings.compiler == "Visual Studio":
+                    print("VS using jom")
                     make = "jom"
                 elif tools.os_info.is_windows:
                     make = "mingw32-make"
                 else:
                     make = "make"
+                print("Run make with {0}".format(make)    
                 self.run(make, run_environment=True)
+                Print("Run install")
                 self.run("%s install" % make)
 
         with open('qtbase/bin/qt.conf', 'w') as f:
