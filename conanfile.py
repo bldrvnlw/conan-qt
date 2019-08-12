@@ -151,8 +151,6 @@ class QtConan(ConanFile):
         if self.settings.os == 'Linux':
             if not tools.which('pkg-config'):
                 self.build_requires('pkg-config_installer/0.29.2@bincrafters/stable')
-        # python 2.7 for webengine
-        # self.build_requires("python_dev_config/0.6@bincrafters/stable")
 
     def configure(self):
         if self.settings.os != 'Linux':
@@ -551,8 +549,7 @@ class QtConan(ConanFile):
         with tools.vcvars(self.settings) if self.settings.compiler == "Visual Studio" else tools.no_op():
             with tools.environment_append({"MAKEFLAGS": "j%d" % tools.cpu_count(), "PKG_CONFIG_PATH": os.getcwd()}):
                 try:
-                    with tools.environment_append({"PATH": "C:\tools\Anaconda3\envs\Py27"}):
-                        self.run("%s/qt5/configure %s" % (self.source_folder, " ".join(args)))
+                    self.run("%s/qt5/configure %s" % (self.source_folder, " ".join(args)))
                 finally:
                     self.output.info(open('config.log', errors='backslashreplace').read())
 
@@ -562,6 +559,7 @@ class QtConan(ConanFile):
                     make = "mingw32-make"
                 else:
                     make = "make"
+                self.run(make, run_environment=True)
                 self.run("%s install" % make)
 
         with open('qtbase/bin/qt.conf', 'w') as f:
