@@ -122,7 +122,7 @@ class QtConan(ConanFile):
     }, **{module: False for module in _submodules if module != 'qtbase'}
     )
     default_options["qtwebengine"] = True
-    requires = "zlib/1.2.11@conan/stable"
+    requires = [("zlib/1.2.11@conan/stable"), ("bzip2/1.0.8@conan/stable")]
     short_paths = True
 
     def _system_package_architecture(self):
