@@ -11,7 +11,7 @@ if __name__ == "__main__":
     filtered_builds = []
     for settings, options, env_vars, build_requires, reference in builder.items:
         # Build shared only
-        if not options["Qt:shared"]:
+        if not options["qt:shared"]:
             continue
             
         filtered_builds.append([settings, new_options, env_vars, build_requires])        
