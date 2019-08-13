@@ -13,7 +13,7 @@ if __name__ == "__main__":
         # Build shared only
         if not options["qt:shared"]:
             continue
-            
-        filtered_builds.append([settings, new_options, env_vars, build_requires])        
+   
+        filtered_builds.append([settings, options, env_vars, build_requires])        
     builder.builds = filtered_builds
     builder.run()
