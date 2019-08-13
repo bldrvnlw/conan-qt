@@ -56,7 +56,7 @@ class QtConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type", "os_build", "arch_build"
 
     options = dict({
-        "shared": [True],
+        "shared": [True, False],
         "commercial": [True, False],
 
         "opengl": ["no", "es2", "desktop", "dynamic"],
