@@ -7,8 +7,8 @@ jobs:
     CONAN_VISUAL_RUNTIMES: MD,MDd
   strategy:
     matrix:
-      x86:
-        CONAN_ARCHS: x86
+#      x86:
+#        CONAN_ARCHS: x86
       x64:
         CONAN_ARCHS: x86_64
   steps:
