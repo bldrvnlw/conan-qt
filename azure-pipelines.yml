@@ -5,6 +5,7 @@ jobs:
   variables:
     CONAN_VISUAL_VERSIONS: 15
     CONAN_VISUAL_RUNTIMES: MD,MDd
+    CONAN_USE_ALWAYS_SHORT_PATHS: 1
   strategy:
     matrix:
 #      x86:
