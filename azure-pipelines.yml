@@ -1,112 +1,25 @@
 jobs:
-- job: Linux
-  pool:
-    vmImage: "Ubuntu 16.04"
-  timeoutInMinutes: 180
-  steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: "3.7"
-  - script: |
-      pip install --upgrade pip
-      chmod +x .ci/install.sh
-      ./.ci/install.sh
-      chmod +x .ci/run.sh
-      ./.ci/run.sh
-    env:
-      CONAN_LOGIN_USERNAME: $(CONAN_LOGIN_USERNAME)
-      CONAN_PASSWORD: $(CONAN_PASSWORD)
+- job: 'Win'
+  pool: 
+    vmImage: 'vs2017-win2016'
+  variables:
+    CONAN_VISUAL_VERSIONS: 15
+    CONAN_VISUAL_RUNTIMES: MD,MDd
   strategy:
     matrix:
-      Gcc 4.9 x86:
-        CONAN_GCC_VERSIONS: 4.9
-        CONAN_DOCKER_IMAGE: conanio/gcc49
-        CONAN_ARCHS: "x86"
-      Gcc 4.9 x86_64:
-        CONAN_GCC_VERSIONS: 4.9
-        CONAN_DOCKER_IMAGE: conanio/gcc49
-        CONAN_ARCHS: "x86_64"
-      Gcc 5 x86:
-        CONAN_GCC_VERSIONS: 5
-        CONAN_DOCKER_IMAGE: conanio/gcc5
-        CONAN_ARCHS: "x86"
-      Gcc 5 x86_64:
-        CONAN_GCC_VERSIONS: 5
-        CONAN_DOCKER_IMAGE: conanio/gcc5
-        CONAN_ARCHS: "x86_64"
-      Gcc 6 x86:
-        CONAN_GCC_VERSIONS: 6
-        CONAN_DOCKER_IMAGE: conanio/gcc6
-        CONAN_ARCHS: "x86"
-      Gcc 6 x86_64:
-        CONAN_GCC_VERSIONS: 6
-        CONAN_DOCKER_IMAGE: conanio/gcc6
-        CONAN_ARCHS: "x86_64"
-      Gcc 7 x86:
-        CONAN_GCC_VERSIONS: 7
-        CONAN_DOCKER_IMAGE: conanio/gcc7
-        CONAN_ARCHS: "x86"
-      Gcc 7 x86_64:
-        CONAN_GCC_VERSIONS: 7
-        CONAN_DOCKER_IMAGE: conanio/gcc7
-        CONAN_ARCHS: "x86_64"
-      Gcc 8 x86:
-        CONAN_GCC_VERSIONS: 8
-        CONAN_DOCKER_IMAGE: conanio/gcc8
-        CONAN_ARCHS: "x86"
-      Gcc 8 x86_64:
-        CONAN_GCC_VERSIONS: 8
-        CONAN_DOCKER_IMAGE: conanio/gcc8
-        CONAN_ARCHS: "x86_64"
-      Clang 3.9 x86:
-        CONAN_CLANG_VERSIONS: 3.9
-        CONAN_DOCKER_IMAGE: conanio/clang39
-        CONAN_ARCHS: "x86"
-      Clang 3.9 x86_64:
-        CONAN_CLANG_VERSIONS: 3.9
-        CONAN_DOCKER_IMAGE: conanio/clang39
-        CONAN_ARCHS: "x86_64"
-      Clang 4.0 x86:
-        CONAN_CLANG_VERSIONS: 4.0
-        CONAN_DOCKER_IMAGE: conanio/clang40
-        CONAN_ARCHS: "x86"
-      Clang 4.0 x86_64:
-        CONAN_CLANG_VERSIONS: 4.0
-        CONAN_DOCKER_IMAGE: conanio/clang40
-        CONAN_ARCHS: "x86_64"
-      Clang 5.0 x86:
-        CONAN_CLANG_VERSIONS: 5.0
-        CONAN_DOCKER_IMAGE: conanio/clang50
-        CONAN_ARCHS: "x86"
-      Clang 5.0 x86_64:
-        CONAN_CLANG_VERSIONS: 5.0
-        CONAN_DOCKER_IMAGE: conanio/clang50
-        CONAN_ARCHS: "x86_64"
-      Clang 6.0 x86:
-        CONAN_CLANG_VERSIONS: 6.0
-        CONAN_DOCKER_IMAGE: conanio/clang60
-        CONAN_ARCHS: "x86"
-      Clang 6.0 x86_64:
-        CONAN_CLANG_VERSIONS: 6.0
-        CONAN_DOCKER_IMAGE: conanio/clang60
-        CONAN_ARCHS: "x86_64"
-- job: macOS
-  pool:
-    vmImage: "macOS-10.13"
-  timeoutInMinutes: 120
+      x86:
+        CONAN_ARCHS: x86
+      x64:
+        CONAN_ARCHS: x86_64
   steps:
-  - script: |
-      /bin/bash -c "sudo xcode-select -s /Applications/Xcode_$(XCODE_VERSION).app/Contents/Developer"
-      pip install --upgrade pip
-      chmod +x .ci/install.sh
-      ./.ci/install.sh
-      chmod +x .ci/run.sh
-      ./.ci/run.sh
-    env:
-      CONAN_LOGIN_USERNAME: $(CONAN_LOGIN_USERNAME)
-      CONAN_PASSWORD: $(CONAN_PASSWORD)
-  strategy:
-    matrix:
-      Clang 10.0:
-        CONAN_APPLE_CLANG_VERSIONS: 10.0
-        XCODE_VERSION: 10
+  - template: .ci/azure-pipelines/build.yml
+
+# - job: 'Mac'
+  # pool: 
+    # vmImage: 'macOS-10.13'
+  # variables:
+    # DEVELOPER_DIR: /Applications/Xcode_10.1.app
+    # CONAN_APPLE_CLANG_VERSIONS: 10.0
+    # CONAN_OPTIONS: "libsamplerate:shared=True"
+  # steps:
+  # - template: .ci/azure-pipelines/build.yml
