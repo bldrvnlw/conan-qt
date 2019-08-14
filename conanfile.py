@@ -543,7 +543,8 @@ class QtConan(ConanFile):
                         if filename.endswith('.pc'):
                             shutil.copyfile(os.path.join(dirpath, filename), filename)
                             tools.replace_prefix_in_pc_file(filename, lib_path)
-
+        
+        args += ['-no-pch']
         if 'glib' in self.deps_cpp_info.deps:
             shutil.move("pcre.pc", "libpcre.pc")
         with tools.vcvars(self.settings) if self.settings.compiler == "Visual Studio" else tools.no_op():
@@ -563,14 +564,16 @@ class QtConan(ConanFile):
                 print("Patch done - compiler settings")
                 if self.settings.compiler == "Visual Studio":
                     print("VS using jom")
-                    make = "jom"
+                    # If we had the Incredibuild make tools license could do this
+                    # make = 'BuildConsole /command="jom" /openmonitor /title="conan-qt"' 
+                    make = "jom" 
                 elif tools.os_info.is_windows:
                     make = "mingw32-make"
                 else:
                     make = "make"
                 print("Run make with {0}".format(make))  
                 self.run(make, run_environment=True)
-                Print("Run install")
+                print("Run install")
                 self.run("%s install" % make)
 
         with open('qtbase/bin/qt.conf', 'w') as f:
