@@ -1,5 +1,6 @@
 jobs:
 - job: 'Win'
+  timeoutInMinutes: 360
   pool: 
     vmImage: 'vs2017-win2016'
   variables:
