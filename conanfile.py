@@ -146,10 +146,10 @@ class QtConan(ConanFile):
         return ""
 
     def build_requirements(self):
-        call("conan remote add --force conan-hdim http://cytosplore.lumc.nl:8081/artifactory/api/conan/conan-local")
+        # call("conan remote add --force conan-hdim http://cytosplore.lumc.nl:8081/artifactory/api/conan/conan-local")
         if tools.os_info.is_windows and self.settings.compiler == "Visual Studio":
             self.build_requires("jom_installer/1.1.2@bincrafters/stable")
-            self.build_requires("python_installer/2.7.16@py27/testing")
+            # self.build_requires("python_installer/2.7.16@py27/testing")
         if self.settings.os == 'Linux':
             if not tools.which('pkg-config'):
                 self.build_requires('pkg-config_installer/0.29.2@bincrafters/stable')
